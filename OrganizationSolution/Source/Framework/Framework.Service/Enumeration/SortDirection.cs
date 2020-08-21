@@ -9,7 +9,6 @@
         /// An ascending sort.
         /// </summary>
         Ascending,
-
         /// <summary>
         /// A descending sort.
         /// </summary>

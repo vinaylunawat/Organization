@@ -7,9 +7,6 @@
     /// <summary>
     /// Date and time extension methods.
     /// </summary>
-    /// <remarks>
-    /// I had to really resist calling this class a 'utility' or 'helper'... :D
-    /// </remarks>
     public static class DateTimeExtensions
     {
         /// <summary>

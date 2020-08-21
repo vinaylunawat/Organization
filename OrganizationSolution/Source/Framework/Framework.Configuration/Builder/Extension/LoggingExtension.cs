@@ -5,8 +5,17 @@
     using Microsoft.Extensions.Logging;
     using Serilog;
 
+    /// <summary>
+    /// Defines the <see cref="LoggingExtension" />.
+    /// </summary>
     public static class LoggingExtension
     {
+        /// <summary>
+        /// The AddLogging.
+        /// </summary>
+        /// <param name="logging">The logging<see cref="ILoggingBuilder"/>.</param>
+        /// <param name="configuration">The configuration<see cref="IConfiguration"/>.</param>
+        /// <returns>The <see cref="ILoggingBuilder"/>.</returns>
         public static ILoggingBuilder AddLogging(this ILoggingBuilder logging, IConfiguration configuration)
         {
             logging.AddConfiguration(configuration);
@@ -18,6 +27,14 @@
             return logging;
         }
 
+        /// <summary>
+        /// The AddFileLogging.
+        /// </summary>
+        /// <param name="loggingBuilder">The loggingBuilder<see cref="ILoggingBuilder"/>.</param>
+        /// <param name="configuration">The configuration<see cref="IConfiguration"/>.</param>
+        /// <param name="defaultLogFilePath">The defaultLogFilePath<see cref="string"/>.</param>
+        /// <param name="defaultLogFileSizeInBytes">The defaultLogFileSizeInBytes<see cref="int"/>.</param>
+        /// <returns>The <see cref="ILoggingBuilder"/>.</returns>
         public static ILoggingBuilder AddFileLogging(this ILoggingBuilder loggingBuilder, IConfiguration configuration, string defaultLogFilePath = ConfigurationConstant.DefaultLogFilePath, int defaultLogFileSizeInBytes = ConfigurationConstant.DefaultLogFileSizeInBytes)
         {
             var logger = new LoggerConfiguration()

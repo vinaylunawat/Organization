@@ -1,20 +1,28 @@
 ﻿namespace Geography.Storage
 {
-    using System;
-    using System.Diagnostics;
-    using System.Threading.Tasks;
-    using Geography.DataAccess;
     using Framework.Configuration;
     using Framework.Configuration.Models;
-    using Geography.Migrations;
     using Framework.Migrations;
+    using Geography.DataAccess;
+    using Geography.Migrations;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
+    using System;
+    using System.Diagnostics;
+    using System.Threading.Tasks;
 
+    /// <summary>
+    /// Defines the <see cref="Program" />.
+    /// </summary>
     public static class Program
     {
+        /// <summary>
+        /// The Main.
+        /// </summary>
+        /// <param name="args">The args<see cref="string[]"/>.</param>
+        /// <returns>The <see cref="Task"/>.</returns>
         public static async Task Main(string[] args)
         {
             try

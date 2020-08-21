@@ -1,10 +1,18 @@
 ﻿namespace Framework.Service.Extension
 {
-    using System.Text;
     using Microsoft.AspNetCore.Mvc;
+    using System.Text;
 
+    /// <summary>
+    /// Defines the <see cref="ProblemDetailsExtensions" />.
+    /// </summary>
     public static class ProblemDetailsExtensions
     {
+        /// <summary>
+        /// The ToFormattedString.
+        /// </summary>
+        /// <param name="problemDetails">The problemDetails<see cref="ProblemDetails"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
         public static string ToFormattedString(this ProblemDetails problemDetails)
         {
             var stringBuilder = new StringBuilder();
@@ -18,6 +26,11 @@
             return stringBuilder.ToString();
         }
 
+        /// <summary>
+        /// The ToFormattedString.
+        /// </summary>
+        /// <param name="validationProblemDetails">The validationProblemDetails<see cref="ValidationProblemDetails"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
         public static string ToFormattedString(this ValidationProblemDetails validationProblemDetails)
         {
             var stringBuilder = new StringBuilder();

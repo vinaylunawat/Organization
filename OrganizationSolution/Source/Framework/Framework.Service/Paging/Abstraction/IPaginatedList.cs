@@ -3,36 +3,35 @@
     /// <summary>
     /// Pagination information.
     /// </summary>
-    /// <typeparam name="T">Type of items in the list.</typeparam>
     public interface IPaginatedList
     {
         /// <summary>
-        /// Gets the page number.
+        /// Gets the page number..
         /// </summary>
         int PageNumber { get; }
 
         /// <summary>
-        /// Gets the number of records in each page.
+        /// Gets the number of records in each page..
         /// </summary>
         int PageSize { get; }
 
         /// <summary>
-        /// Gets the total number of records.
+        /// Gets the total number of records..
         /// </summary>
         int TotalRecords { get; }
 
         /// <summary>
-        /// Gets the total number of pages.
+        /// Gets the total number of pages..
         /// </summary>
         int TotalPages { get; }
 
         /// <summary>
-        /// Gets the previous page index if there is a previous page, otherwise it returns the first page.
+        /// Gets the previous page index if there is a previous page, otherwise it returns the first page..
         /// </summary>
         int PreviousPage { get; }
 
         /// <summary>
-        /// Gets the next page index if there is a next page, otherwise it returns the last page.
+        /// Gets the next page index if there is a next page, otherwise it returns the last page..
         /// </summary>
         int NextPage { get; }
     }

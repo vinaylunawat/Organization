@@ -17,7 +17,7 @@
         public string BearerToken { get; private set; }
 
         /// <summary>
-        /// Gets the TenantId.
+        /// Gets the TenantIds.
         /// </summary>
         public string TenantIds { get; private set; }
 
@@ -33,7 +33,7 @@
         /// <summary>
         /// The SetTenantId.
         /// </summary>
-        /// <param name="tenantId">The tenantId<see cref="string"/>.</param>
+        /// <param name="tenantIds">The tenantIds<see cref="string"/>.</param>
         public void SetTenantId(string tenantIds)
         {
             TenantIds = tenantIds;

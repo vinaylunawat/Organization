@@ -1,12 +1,21 @@
 ﻿namespace Framework.Business
 {
+    using EnsureThat;
     using System;
     using System.Linq;
-    using EnsureThat;
 
+    /// <summary>
+    /// Defines the <see cref="ManagerResponseBase{TErrorCode}" />.
+    /// </summary>
+    /// <typeparam name="TErrorCode">.</typeparam>
     public abstract class ManagerResponseBase<TErrorCode>
         where TErrorCode : struct, Enum
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ManagerResponseBase{TErrorCode}"/> class.
+        /// </summary>
+        /// <param name="errorCode">The errorCode<see cref="TErrorCode"/>.</param>
+        /// <param name="message">The message<see cref="string"/>.</param>
         public ManagerResponseBase(TErrorCode errorCode, string message)
         {
             EnsureArg.IsNotNull<TErrorCode>(errorCode, nameof(errorCode));
@@ -18,6 +27,11 @@
             };
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ManagerResponseBase{TErrorCode}"/> class.
+        /// </summary>
+        /// <param name="errorCode">The errorCode<see cref="TErrorCode"/>.</param>
+        /// <param name="exception">The exception<see cref="Exception"/>.</param>
         public ManagerResponseBase(TErrorCode errorCode, Exception exception)
         {
             EnsureArg.IsNotNull<TErrorCode>(errorCode, nameof(errorCode));
@@ -29,6 +43,10 @@
             };
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ManagerResponseBase{TErrorCode}"/> class.
+        /// </summary>
+        /// <param name="errorRecords">The errorRecords<see cref="ErrorRecords{TErrorCode}"/>.</param>
         public ManagerResponseBase(ErrorRecords<TErrorCode> errorRecords)
         {
             EnsureArg.IsNotNull(errorRecords, nameof(errorRecords));
@@ -36,6 +54,10 @@
             ErrorRecords = errorRecords;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ManagerResponseBase{TErrorCode}"/> class.
+        /// </summary>
+        /// <param name="exception">The exception<see cref="Exception"/>.</param>
         public ManagerResponseBase(Exception exception)
         {
             EnsureArg.IsNotNull(exception, nameof(exception));
@@ -46,28 +68,26 @@
             };
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ManagerResponseBase{TErrorCode}"/> class.
+        /// </summary>
         protected ManagerResponseBase()
         {
             ErrorRecords = new ErrorRecords<TErrorCode>();
         }
 
         /// <summary>
-        /// Gets a value indicating whether this instance has an error.
+        /// Gets a value indicating whether this instance has an error..
         /// </summary>
-        /// <value>
-        ///   <c>true</c> if this instance has an error; otherwise, <c>false</c>.
-        /// </value>
         public bool HasError
         {
             get { return ErrorRecords.Any(); }
         }
 
         /// <summary>
-        /// Gets the error records.
+        /// Gets or sets the ErrorRecords
+        /// Gets the error records..
         /// </summary>
-        /// <value>
-        /// The error records.
-        /// </value>
         public ErrorRecords<TErrorCode> ErrorRecords { get; set; }
     }
 }

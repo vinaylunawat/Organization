@@ -1,18 +1,32 @@
 ﻿namespace Framework.Service
 {
+    using EnsureThat;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.OpenApi.Models;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Reflection;
-    using EnsureThat;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.OpenApi.Models;
 
+    /// <summary>
+    /// Defines the <see cref="SwaggerServicesExtensions" />.
+    /// </summary>
     public static class SwaggerServicesExtensions
     {
+        /// <summary>
+        /// Defines the SwaggerSecurityType.
+        /// </summary>
         private const string SwaggerSecurityType = "Bearer";
 
+        /// <summary>
+        /// The AddSwaggerWithComments.
+        /// </summary>
+        /// <param name="services">The services<see cref="IServiceCollection"/>.</param>
+        /// <param name="apiName">The apiName<see cref="string"/>.</param>
+        /// <param name="apiVersion">The apiVersion<see cref="string"/>.</param>
+        /// <param name="assemblies">The assemblies<see cref="IEnumerable{Assembly}"/>.</param>
+        /// <returns>The <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection AddSwaggerWithComments(this IServiceCollection services, string apiName, string apiVersion, IEnumerable<Assembly> assemblies)
         {
             EnsureArg.IsNotNull(assemblies, nameof(assemblies));
@@ -75,6 +89,16 @@
 
             return services;
         }
+
+        /// <summary>
+        /// The AddSwaggerWithComments.
+        /// </summary>
+        /// <param name="services">The services<see cref="IServiceCollection"/>.</param>
+        /// <param name="apiName">The apiName<see cref="string"/>.</param>
+        /// <param name="apiVersion">The apiVersion<see cref="string"/>.</param>
+        /// <param name="assembly">The assembly<see cref="Assembly"/>.</param>
+        /// <param name="assemblies">The assemblies<see cref="Assembly[]"/>.</param>
+        /// <returns>The <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection AddSwaggerWithComments(this IServiceCollection services, string apiName, string apiVersion, Assembly assembly, params Assembly[] assemblies)
         {
             EnsureArg.IsNotNull(assembly, nameof(assembly));

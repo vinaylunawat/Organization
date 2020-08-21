@@ -12,6 +12,9 @@
     /// <typeparam name="TKey">Key on the basis of which sorting will work.</typeparam>
     public class Orderer<T, TKey> : IOrderer<T>
     {
+        /// <summary>
+        /// Defines the _orderExpression.
+        /// </summary>
         private readonly Expression<Func<T, TKey>> _orderExpression;
 
         /// <summary>

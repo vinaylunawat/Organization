@@ -1,26 +1,44 @@
 ﻿namespace Geography.Business.Country.Manager
 {
+    using AutoMapper;
+    using EnsureThat;
+    using Framework.Business;
+    using Framework.Business.Extension;
+    using Framework.Business.Manager.Command;
     using Geography.Business.Country.Models;
     using Geography.Business.Country.Validators;
     using Geography.DataAccess;
     using Geography.DataAccess.Repository;
-    using Framework.Business;
-    using Framework.Business.Extension;
-    using Framework.Business.Manager.Command;
-    using AutoMapper;
-    using EnsureThat;
     using Microsoft.Extensions.Logging;
     using System;
-    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text.Json.Serialization;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// Defines the <see cref="CountryCommandManager" />.
+    /// </summary>
     public class CountryCommandManager : CodeCommandManager<GeographyDbContext, GeographyReadOnlyDbContext, CountryErrorCode, Entity.Entities.Country, CountryCreateModel, CountryUpdateModel>, ICountryCommandManager
     {
+        /// <summary>
+        /// Defines the _countryQueryRepository.
+        /// </summary>
         private readonly ICountryQueryRepository _countryQueryRepository;
+
+        /// <summary>
+        /// Defines the _countryCommandRepository.
+        /// </summary>
         private readonly ICountryCommandRepository _countryCommandRepository;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CountryCommandManager"/> class.
+        /// </summary>
+        /// <param name="createModelValidator">The createModelValidator<see cref="CountryCreateModelValidator"/>.</param>
+        /// <param name="updateModelValidator">The updateModelValidator<see cref="CountryUpdateModelValidator"/>.</param>
+        /// <param name="logger">The logger<see cref="ILogger{CountryCommandManager}"/>.</param>
+        /// <param name="mapper">The mapper<see cref="IMapper"/>.</param>
+        /// <param name="countryQueryRepository">The countryQueryRepository<see cref="ICountryQueryRepository"/>.</param>
+        /// <param name="countryCommandRepository">The countryCommandRepository<see cref="ICountryCommandRepository"/>.</param>
         public CountryCommandManager(
             CountryCreateModelValidator createModelValidator,
             CountryUpdateModelValidator updateModelValidator,
@@ -35,6 +53,11 @@
             _countryCommandRepository = countryCommandRepository;
         }
 
+        /// <summary>
+        /// The CreateValidationAsync.
+        /// </summary>
+        /// <param name="indexedModels">The indexedModels<see cref="IList{IIndexedItem{CountryCreateModel}}"/>.</param>
+        /// <returns>The <see cref="Task{ErrorRecords{CountryErrorCode}}"/>.</returns>
         protected override async Task<ErrorRecords<CountryErrorCode>> CreateValidationAsync(IList<IIndexedItem<CountryCreateModel>> indexedModels)
         {
             var errorRecords = await base.CreateValidationAsync(indexedModels).ConfigureAwait(false);
@@ -53,6 +76,11 @@
             return new ErrorRecords<CountryErrorCode>(errorRecords.Concat(duplicateCodeCheck));
         }
 
+        /// <summary>
+        /// The UpdateValidationAsync.
+        /// </summary>
+        /// <param name="indexedModels">The indexedModels<see cref="IList{IIndexedItem{CountryUpdateModel}}"/>.</param>
+        /// <returns>The <see cref="Task{ErrorRecords{CountryErrorCode}}"/>.</returns>
         protected override async Task<ErrorRecords<CountryErrorCode>> UpdateValidationAsync(IList<IIndexedItem<CountryUpdateModel>> indexedModels)
         {
             var errorRecords = await base.UpdateValidationAsync(indexedModels).ConfigureAwait(false);
@@ -72,6 +100,13 @@
             return new ErrorRecords<CountryErrorCode>(errorRecords.Concat(duplicateCodeCheck));
         }
 
+        /// <summary>
+        /// The DeleteValidationAsync.
+        /// </summary>
+        /// <typeparam name="T">.</typeparam>
+        /// <param name="keys">The keys<see cref="IEnumerable{T}"/>.</param>
+        /// <param name="entities">The entities<see cref="IEnumerable{Entity.Entities.Country}"/>.</param>
+        /// <returns>The <see cref="Task{ErrorRecords{CountryErrorCode}}"/>.</returns>
         protected async override Task<ErrorRecords<CountryErrorCode>> DeleteValidationAsync<T>(IEnumerable<T> keys, IEnumerable<Entity.Entities.Country> entities)
         {
             var errorRecoreds = await base.DeleteValidationAsync(keys, entities).ConfigureAwait(false);
@@ -95,6 +130,12 @@
             return errorRecoreds;
         }
 
+        /// <summary>
+        /// The DeleteByIsoCodeAsync.
+        /// </summary>
+        /// <param name="isoCode">The isoCode<see cref="string"/>.</param>
+        /// <param name="isoCodes">The isoCodes<see cref="string[]"/>.</param>
+        /// <returns>The <see cref="Task{ManagerResponse{CountryErrorCode}}"/>.</returns>
         public async Task<ManagerResponse<CountryErrorCode>> DeleteByIsoCodeAsync(string isoCode, params string[] isoCodes)
         {
             try
@@ -109,6 +150,11 @@
             }
         }
 
+        /// <summary>
+        /// The DeleteByIsoCodeAsync.
+        /// </summary>
+        /// <param name="isoCodes">The isoCodes<see cref="IEnumerable{string}"/>.</param>
+        /// <returns>The <see cref="Task{ManagerResponse{CountryErrorCode}}"/>.</returns>
         public async Task<ManagerResponse<CountryErrorCode>> DeleteByIsoCodeAsync(IEnumerable<string> isoCodes)
         {
             try
@@ -124,17 +170,5 @@
                 return new ManagerResponse<CountryErrorCode>(ex);
             }
         }
-
-        //protected override async Task<IEnumerable<Entity.Entities.Country>> DeleteEntityQueryAsync(Expression<Func<Entity.Entities.Country, bool>> predicate)
-        //{
-        //    var criteria = new FilterCriteria<Entity.Entities.Country>
-        //    {
-        //        Predicate = predicate
-        //    };
-        //    criteria.Includes.Add(ec => ec.Code);
-
-        //    var result = await _countryQueryRepository.GetByCriteriaAsync(criteria).ConfigureAwait(false);
-        //    return result;
-        //}
     }
 }

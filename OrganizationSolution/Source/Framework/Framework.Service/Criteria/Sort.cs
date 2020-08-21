@@ -12,12 +12,13 @@
     public class Sort<T>
     {
         /// <summary>
-        /// Gets or sets the sort direction to apply (ascending vs descending).
+        /// Gets or sets the sort direction to apply (ascending vs descending)..
         /// </summary>
         public SortDirection Direction { get; set; }
 
         /// <summary>
-        /// Gets or sets an <see cref="IOrderer{T}"/> used to apply the sorting.
+        /// Gets or sets the Order
+        /// Gets or sets an <see cref="IOrderer{T}"/> used to apply the sorting..
         /// </summary>
         public IOrderer<T> Order { get; set; }
 

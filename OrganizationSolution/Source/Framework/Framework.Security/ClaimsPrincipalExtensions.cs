@@ -1,35 +1,55 @@
 ﻿namespace Framework.Security
 {
+    using Framework.Security.Authorization;
+    using IdentityModel;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Primitives;
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Security.Claims;
-    using System.Threading.Tasks;
-    using Framework.Security.Authorization;
-    using IdentityModel;
-    using Microsoft.AspNetCore.Authentication;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Primitives;
-    using Newtonsoft.Json;
 
+    /// <summary>
+    /// Defines the <see cref="ClaimsPrincipalExtensions" />.
+    /// </summary>
     public static class ClaimsPrincipalExtensions
     {
+        /// <summary>
+        /// The GetPreferredUserName.
+        /// </summary>
+        /// <param name="controllerBase">The controllerBase<see cref="ControllerBase"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
         public static string GetPreferredUserName(this ControllerBase controllerBase)
         {
             return controllerBase.User.FindFirst(JwtClaimTypes.PreferredUserName)?.Value;
         }
 
+        /// <summary>
+        /// The GetLoginProviderCode.
+        /// </summary>
+        /// <param name="controllerBase">The controllerBase<see cref="ControllerBase"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
         public static string GetLoginProviderCode(this ControllerBase controllerBase)
         {
             return controllerBase.User.FindFirst(CustomClaimTypes.LoginProviderCode)?.Value;
         }
 
+        /// <summary>
+        /// The GetLoginProviderTypeCode.
+        /// </summary>
+        /// <param name="controllerBase">The controllerBase<see cref="ControllerBase"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
         public static string GetLoginProviderTypeCode(this ControllerBase controllerBase)
         {
             return controllerBase.User.FindFirst(CustomClaimTypes.LoginProviderTypeCode)?.Value;
         }
 
+        /// <summary>
+        /// The GetUserId.
+        /// </summary>
+        /// <param name="controller">The controller<see cref="ControllerBase"/>.</param>
+        /// <returns>The <see cref="long"/>.</returns>
         public static long GetUserId(this ControllerBase controller)
         {
             var subjectId = string.Empty;
@@ -45,9 +65,14 @@
                 throw new InvalidOperationException($"Invalid SubjectId");
             }
 
-            return userId;          
+            return userId;
         }
 
+        /// <summary>
+        /// The GetTenantId.
+        /// </summary>
+        /// <param name="controllerBase">The controllerBase<see cref="ControllerBase"/>.</param>
+        /// <returns>The <see cref="long"/>.</returns>
         public static long GetTenantId(this ControllerBase controllerBase)
         {
             var claimValue = controllerBase.User.FindFirst(CustomClaimTypes.TenantIds)?.Value;
@@ -62,6 +87,11 @@
             return id;
         }
 
+        /// <summary>
+        /// The GetCompanyId.
+        /// </summary>
+        /// <param name="controllerBase">The controllerBase<see cref="ControllerBase"/>.</param>
+        /// <returns>The <see cref="long"/>.</returns>
         public static long GetCompanyId(this ControllerBase controllerBase)
         {
             var claimValue = controllerBase.User.FindFirst(CustomClaimTypes.CompanyId)?.Value;
@@ -74,8 +104,13 @@
             }
 
             return id;
-        }        
+        }
 
+        /// <summary>
+        /// The GetCompanyMasterKey.
+        /// </summary>
+        /// <param name="controllerBase">The controllerBase<see cref="ControllerBase"/>.</param>
+        /// <returns>The <see cref="Guid"/>.</returns>
         public static Guid GetCompanyMasterKey(this ControllerBase controllerBase)
         {
             var claimValue = controllerBase.User.FindFirst(CustomClaimTypes.CompanyMasterKey)?.Value;
@@ -90,6 +125,11 @@
             return masterKey;
         }
 
+        /// <summary>
+        /// The GetUserLanguageIsoCode.
+        /// </summary>
+        /// <param name="controllerBase">The controllerBase<see cref="ControllerBase"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
         public static string GetUserLanguageIsoCode(this ControllerBase controllerBase)
         {
             var claim = controllerBase.User.FindFirst(CustomClaimTypes.LanguageIsoCode);
@@ -102,6 +142,11 @@
             return claim.Value;
         }
 
+        /// <summary>
+        /// The GetUserFormatIsoCode.
+        /// </summary>
+        /// <param name="controllerBase">The controllerBase<see cref="ControllerBase"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
         public static string GetUserFormatIsoCode(this ControllerBase controllerBase)
         {
             var claim = controllerBase.User.FindFirst(CustomClaimTypes.FormatIsoCode);
@@ -114,16 +159,32 @@
             return claim.Value;
         }
 
+        /// <summary>
+        /// The HasCurrentModuleSecurityRight.
+        /// </summary>
+        /// <param name="controllerBase">The controllerBase<see cref="ControllerBase"/>.</param>
+        /// <param name="rightCode">The rightCode<see cref="string"/>.</param>
+        /// <returns>The <see cref="bool"/>.</returns>
         public static bool HasCurrentModuleSecurityRight(this ControllerBase controllerBase, string rightCode)
         {
             return controllerBase.User.HasCurrentModuleSecurityRight(rightCode);
         }
 
+        /// <summary>
+        /// The GetCurrentModuleSecurityRights.
+        /// </summary>
+        /// <param name="controllerBase">The controllerBase<see cref="ControllerBase"/>.</param>
+        /// <returns>The <see cref="HashSet{SecurityRightIdentifierModel}"/>.</returns>
         public static HashSet<SecurityRightIdentifierModel> GetCurrentModuleSecurityRights(this ControllerBase controllerBase)
         {
             return controllerBase.User.GetCurrentModuleSecurityRights();
         }
 
+        /// <summary>
+        /// The GetUserTimeZone.
+        /// </summary>
+        /// <param name="controllerBase">The controllerBase<see cref="ControllerBase"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
         public static string GetUserTimeZone(this ControllerBase controllerBase)
         {
             var claim = controllerBase.User.FindFirst(CustomClaimTypes.TimeZone);
@@ -134,8 +195,14 @@
             }
 
             return claim.Value;
-        }         
+        }
 
+        /// <summary>
+        /// The HasCurrentModuleSecurityRight.
+        /// </summary>
+        /// <param name="claimsPrincipal">The claimsPrincipal<see cref="ClaimsPrincipal"/>.</param>
+        /// <param name="rightCode">The rightCode<see cref="string"/>.</param>
+        /// <returns>The <see cref="bool"/>.</returns>
         internal static bool HasCurrentModuleSecurityRight(this ClaimsPrincipal claimsPrincipal, string rightCode)
         {
             var rights = claimsPrincipal.GetCurrentModuleSecurityRights();
@@ -147,6 +214,11 @@
             return rights.Any(x => x.SecurityRightCode == rightCode);
         }
 
+        /// <summary>
+        /// The GetCurrentModuleSecurityRights.
+        /// </summary>
+        /// <param name="claimsPrincipal">The claimsPrincipal<see cref="ClaimsPrincipal"/>.</param>
+        /// <returns>The <see cref="HashSet{SecurityRightIdentifierModel}"/>.</returns>
         internal static HashSet<SecurityRightIdentifierModel> GetCurrentModuleSecurityRights(this ClaimsPrincipal claimsPrincipal)
         {
             var rightsClaim = claimsPrincipal.FindFirst(CustomClaimTypes.SecurityRights)?.Value;
@@ -157,6 +229,6 @@
             }
 
             return JsonConvert.DeserializeObject<HashSet<SecurityRightIdentifierModel>>(rightsClaim);
-        }         
+        }
     }
 }

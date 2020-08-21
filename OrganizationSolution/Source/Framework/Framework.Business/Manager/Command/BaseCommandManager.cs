@@ -1,10 +1,10 @@
 ﻿namespace Framework.Business.Manager.Command
 {
+    using EnsureThat;
     using Framework.Constant;
     using Framework.DataAccess;
     using Framework.DataAccess.Repository;
     using Framework.Entity;
-    using EnsureThat;
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
@@ -46,7 +46,8 @@
         /// <param name="queryRepository">The queryRepository<see cref="IGenericQueryRepository{TReadOnlyDbContext, TEntity}"/>.</param>
         /// <param name="commandRepository">The commandRepository<see cref="IGenericCommandRepository{TDbContext, TEntity}"/>.</param>
         /// <param name="logger">The logger<see cref="ILogger{BaseCommandManager{TDbContext, TReadOnlyDbContext, TErrorCode, TEntity}}"/>.</param>
-        protected BaseCommandManager(IGenericQueryRepository<TReadOnlyDbContext, TEntity> queryRepository, IGenericCommandRepository<TDbContext, TEntity> commandRepository, ILogger<BaseCommandManager<TDbContext, TReadOnlyDbContext, TErrorCode, TEntity>> logger,TErrorCode idDoesNotExist)
+        /// <param name="idDoesNotExist">The idDoesNotExist<see cref="TErrorCode"/>.</param>
+        protected BaseCommandManager(IGenericQueryRepository<TReadOnlyDbContext, TEntity> queryRepository, IGenericCommandRepository<TDbContext, TEntity> commandRepository, ILogger<BaseCommandManager<TDbContext, TReadOnlyDbContext, TErrorCode, TEntity>> logger, TErrorCode idDoesNotExist)
             : base(logger)
         {
             _queryRepository = queryRepository;

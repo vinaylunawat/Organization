@@ -1,21 +1,30 @@
 ﻿namespace Framework.Business.Manager.Command
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
+    using AutoMapper;
+    using EnsureThat;
+    using FluentValidation;
     using Framework.Business.Extension;
     using Framework.Business.Models;
     using Framework.DataAccess;
     using Framework.DataAccess.Repository;
     using Framework.Entity;
     using Framework.Service.Extension;
-    using AutoMapper;
-    using EnsureThat;
-    using FluentValidation;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
 
+    /// <summary>
+    /// Defines the <see cref="CodeCommandManager{TDbContext, TReadOnlyDbContext, TErrorCode, TEntity, TCreateModel, TUpdateModel}" />.
+    /// </summary>
+    /// <typeparam name="TDbContext">.</typeparam>
+    /// <typeparam name="TReadOnlyDbContext">.</typeparam>
+    /// <typeparam name="TErrorCode">.</typeparam>
+    /// <typeparam name="TEntity">.</typeparam>
+    /// <typeparam name="TCreateModel">.</typeparam>
+    /// <typeparam name="TUpdateModel">.</typeparam>
     public abstract class CodeCommandManager<TDbContext, TReadOnlyDbContext, TErrorCode, TEntity, TCreateModel, TUpdateModel>
         : CommandManager<TDbContext, TReadOnlyDbContext, TErrorCode, TEntity, TCreateModel, TUpdateModel>
         , ICodeCommandManager<TErrorCode, TCreateModel, TUpdateModel>
@@ -26,9 +35,28 @@
         where TCreateModel : class, IModelWithCode
         where TUpdateModel : class, TCreateModel, IModelWithId, IModelWithCode
     {
+        /// <summary>
+        /// Defines the _queryRepository.
+        /// </summary>
         private readonly IGenericQueryRepository<TReadOnlyDbContext, TEntity> _queryRepository;
+
+        /// <summary>
+        /// Defines the _commandRepository.
+        /// </summary>
         private readonly IGenericCommandRepository<TDbContext, TEntity> _commandRepository;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CodeCommandManager{TDbContext, TReadOnlyDbContext, TErrorCode, TEntity, TCreateModel, TUpdateModel}"/> class.
+        /// </summary>
+        /// <param name="queryRepository">The queryRepository<see cref="IGenericQueryRepository{TReadOnlyDbContext, TEntity}"/>.</param>
+        /// <param name="commandRepository">The commandRepository<see cref="IGenericCommandRepository{TDbContext, TEntity}"/>.</param>
+        /// <param name="createModelValidator">The createModelValidator<see cref="ModelValidator{TCreateModel}"/>.</param>
+        /// <param name="updateModelValidator">The updateModelValidator<see cref="ModelValidator{TUpdateModel}"/>.</param>
+        /// <param name="logger">The logger<see cref="ILogger{CodeCommandManager{TDbContext, TReadOnlyDbContext, TErrorCode, TEntity, TCreateModel, TUpdateModel}}"/>.</param>
+        /// <param name="mapper">The mapper<see cref="IMapper"/>.</param>
+        /// <param name="idDoesNotExist">The idDoesNotExist<see cref="TErrorCode"/>.</param>
+        /// <param name="idNotUnique">The idNotUnique<see cref="TErrorCode"/>.</param>
+        /// <param name="codeNotUnique">The codeNotUnique<see cref="TErrorCode"/>.</param>
         protected CodeCommandManager(IGenericQueryRepository<TReadOnlyDbContext, TEntity> queryRepository,
             IGenericCommandRepository<TDbContext, TEntity> commandRepository, ModelValidator<TCreateModel> createModelValidator, ModelValidator<TUpdateModel> updateModelValidator, ILogger<CodeCommandManager<TDbContext, TReadOnlyDbContext, TErrorCode, TEntity, TCreateModel, TUpdateModel>> logger, IMapper mapper, TErrorCode idDoesNotExist, TErrorCode idNotUnique, TErrorCode codeNotUnique)
             : base(queryRepository, commandRepository, createModelValidator, updateModelValidator, logger, mapper, idDoesNotExist, idNotUnique)
@@ -38,8 +66,17 @@
             _commandRepository = commandRepository;
         }
 
+        /// <summary>
+        /// Gets the CodeNotUnique.
+        /// </summary>
         protected TErrorCode CodeNotUnique { get; }
 
+        /// <summary>
+        /// The DeleteByCodeAsync.
+        /// </summary>
+        /// <param name="code">The code<see cref="string"/>.</param>
+        /// <param name="codes">The codes<see cref="string[]"/>.</param>
+        /// <returns>The <see cref="Task{ManagerResponse{TErrorCode}}"/>.</returns>
         public async Task<ManagerResponse<TErrorCode>> DeleteByCodeAsync(string code, params string[] codes)
         {
             try
@@ -55,6 +92,11 @@
             }
         }
 
+        /// <summary>
+        /// The DeleteByCodeAsync.
+        /// </summary>
+        /// <param name="codes">The codes<see cref="IEnumerable{string}"/>.</param>
+        /// <returns>The <see cref="Task{ManagerResponse{TErrorCode}}"/>.</returns>
         public virtual async Task<ManagerResponse<TErrorCode>> DeleteByCodeAsync(IEnumerable<string> codes)
         {
             try
@@ -71,6 +113,12 @@
             }
         }
 
+        /// <summary>
+        /// The CreateIfNotExistByCodeAsync.
+        /// </summary>
+        /// <param name="model">The model<see cref="TCreateModel"/>.</param>
+        /// <param name="models">The models<see cref="TCreateModel[]"/>.</param>
+        /// <returns>The <see cref="Task{ManagerResponse{TErrorCode}}"/>.</returns>
         public async Task<ManagerResponse<TErrorCode>> CreateIfNotExistByCodeAsync(TCreateModel model, params TCreateModel[] models)
         {
             try
@@ -86,6 +134,11 @@
             }
         }
 
+        /// <summary>
+        /// The CreateIfNotExistByCodeAsync.
+        /// </summary>
+        /// <param name="models">The models<see cref="IEnumerable{TCreateModel}"/>.</param>
+        /// <returns>The <see cref="Task{ManagerResponse{TErrorCode}}"/>.</returns>
         public virtual async Task<ManagerResponse<TErrorCode>> CreateIfNotExistByCodeAsync(IEnumerable<TCreateModel> models)
         {
             try
@@ -126,7 +179,7 @@
                         await _commandRepository.Insert(entities).ConfigureAwait(false);
                     }
                 }
-                var finalIds =  _queryRepository.FetchByAndReturnQuerable(x => modelCodes.Contains(x.Code)).OrderEntitiesByModelsOrder(models, entity => entity.Code, entity => entity.Id, model => model.Code);
+                var finalIds = _queryRepository.FetchByAndReturnQuerable(x => modelCodes.Contains(x.Code)).OrderEntitiesByModelsOrder(models, entity => entity.Code, entity => entity.Id, model => model.Code);
                 return new ManagerResponse<TErrorCode>(finalIds);
             }
             catch (Exception ex)
@@ -136,6 +189,12 @@
             }
         }
 
+        /// <summary>
+        /// The CreateOrUpdateByCodeAsync.
+        /// </summary>
+        /// <param name="model">The model<see cref="TUpdateModel"/>.</param>
+        /// <param name="models">The models<see cref="TUpdateModel[]"/>.</param>
+        /// <returns>The <see cref="Task{ManagerResponse{TErrorCode}}"/>.</returns>
         public async Task<ManagerResponse<TErrorCode>> CreateOrUpdateByCodeAsync(TUpdateModel model, params TUpdateModel[] models)
         {
             try
@@ -151,6 +210,11 @@
             }
         }
 
+        /// <summary>
+        /// The CreateOrUpdateByCodeAsync.
+        /// </summary>
+        /// <param name="models">The models<see cref="IEnumerable{TUpdateModel}"/>.</param>
+        /// <returns>The <see cref="Task{ManagerResponse{TErrorCode}}"/>.</returns>
         public virtual async Task<ManagerResponse<TErrorCode>> CreateOrUpdateByCodeAsync(IEnumerable<TUpdateModel> models)
         {
             try
@@ -239,6 +303,11 @@
             }
         }
 
+        /// <summary>
+        /// The CreateValidationAsync.
+        /// </summary>
+        /// <param name="indexedModels">The indexedModels<see cref="IList{IIndexedItem{TCreateModel}}"/>.</param>
+        /// <returns>The <see cref="Task{ErrorRecords{TErrorCode}}"/>.</returns>
         protected override async Task<ErrorRecords<TErrorCode>> CreateValidationAsync(IList<IIndexedItem<TCreateModel>> indexedModels)
         {
             Logger.LogDebug($"Calling {nameof(CreateValidationAsync)}");
@@ -257,6 +326,11 @@
             return new ErrorRecords<TErrorCode>(baseErrorRecords.Concat(uniqueErrorRecords));
         }
 
+        /// <summary>
+        /// The UpdateValidationAsync.
+        /// </summary>
+        /// <param name="indexedModels">The indexedModels<see cref="IList{IIndexedItem{TUpdateModel}}"/>.</param>
+        /// <returns>The <see cref="Task{ErrorRecords{TErrorCode}}"/>.</returns>
         protected override async Task<ErrorRecords<TErrorCode>> UpdateValidationAsync(IList<IIndexedItem<TUpdateModel>> indexedModels)
         {
             Logger.LogDebug($"Calling {nameof(UpdateValidationAsync)}");

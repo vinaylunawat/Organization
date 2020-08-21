@@ -110,13 +110,12 @@
                 _logger.LogInformation(SecurityConstants.InvalidTenantIdValidationMessage);
                 throw;
             }
-
         }
 
         /// <summary>
         /// The GetTenantIds.
         /// </summary>
-        /// <param name="tokenString">The tokenString<see cref="string"/>.</param>
+        /// <param name="claims">The claims<see cref="IEnumerable{Claim}"/>.</param>
         /// <returns>The <see cref="IEnumerable{long}"/>.</returns>
         private IEnumerable<long> GetClaimTenantIds(IEnumerable<Claim> claims)
         {

@@ -1,11 +1,14 @@
 ﻿namespace Framework.Business
 {
+    using Newtonsoft.Json;
     using System;
     using System.IO;
     using System.Runtime.Serialization;
     using System.Runtime.Serialization.Formatters.Binary;
-    using Newtonsoft.Json;
 
+    /// <summary>
+    /// Defines the <see cref="ObjectHelper" />.
+    /// </summary>
     public static class ObjectHelper
     {
         /// <summary>

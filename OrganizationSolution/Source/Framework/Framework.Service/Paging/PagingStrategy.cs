@@ -29,12 +29,14 @@
         }
 
         /// <summary>
-        /// Gets or Sets Page Size.
+        /// Gets or sets the PageSize
+        /// Gets or Sets Page Size..
         /// </summary>
         public int PageSize { get; set; }
 
         /// <summary>
-        /// Gets or Sets Page Number.
+        /// Gets or sets the PageNumber
+        /// Gets or Sets Page Number..
         /// </summary>
         public int PageNumber { get; set; }
     }

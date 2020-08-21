@@ -8,9 +8,7 @@
     /// Paginated generic list of items.
     /// </summary>
     /// <typeparam name="T">Type of items in the list.</typeparam>
-#pragma warning disable CA1710 // Identifiers should have correct suffix
     public class PaginatedList<T> : List<T>, IPaginatedList<T>
-#pragma warning restore CA1710 // Identifiers should have correct suffix
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PaginatedList{T}"/> class.

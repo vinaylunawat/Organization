@@ -9,16 +9,43 @@
     using System.Threading.Tasks;
 
     // todo we will refector this class & method
-
+    /// <summary>
+    /// Defines the <see cref="AuthorizeClaimFilter" />.
+    /// </summary>
     public class AuthorizeClaimFilter : IAsyncAuthorizationFilter
     {
+        /// <summary>
+        /// Defines the _claim.
+        /// </summary>
         private readonly Claim _claim;
+
+        /// <summary>
+        /// Defines the _logger.
+        /// </summary>
         private readonly ILogger<AuthorizeClaimFilter> _logger;
+
+        /// <summary>
+        /// Defines the _memoryCache.
+        /// </summary>
         private readonly IMemoryCache _memoryCache;
+
+        /// <summary>
+        /// Defines the _cacheDurationSeconds.
+        /// </summary>
         private readonly double _cacheDurationSeconds = 300;
 
+        /// <summary>
+        /// Defines the _authorizeClient.
+        /// </summary>
         private readonly IAuthorizeClient _authorizeClient;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AuthorizeClaimFilter"/> class.
+        /// </summary>
+        /// <param name="claim">The claim<see cref="Claim"/>.</param>
+        /// <param name="authorizeClient">The authorizeClient<see cref="IAuthorizeClient"/>.</param>
+        /// <param name="memoryCache">The memoryCache<see cref="IMemoryCache"/>.</param>
+        /// <param name="logger">The logger<see cref="ILogger{AuthorizeClaimFilter}"/>.</param>
         public AuthorizeClaimFilter(Claim claim, IAuthorizeClient authorizeClient, IMemoryCache memoryCache, ILogger<AuthorizeClaimFilter> logger)
         {
             EnsureArg.IsNotNull(claim, nameof(claim));
@@ -32,6 +59,11 @@
             _logger = logger;
         }
 
+        /// <summary>
+        /// The OnAuthorizationAsync.
+        /// </summary>
+        /// <param name="context">The context<see cref="AuthorizationFilterContext"/>.</param>
+        /// <returns>The <see cref="Task"/>.</returns>
         public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
         {
             var claimsPrincipal = context.HttpContext.User;
@@ -45,19 +77,6 @@
             {
                 context.Result = new ForbidResult();
             }
-            //if (claimsPrincipal.HasCurrentModuleSecurityRight(_claim.Value))
-            //{
-            //    _logger.LogDebug($"Policy: {_claim.Value} was found in user claims. Action allowed");
-            //}
-            //else
-            //{
-            //    //var allowed = await HasRightInAccessToken(context).ConfigureAwait(false);
-
-            //    if (false)
-            //    {
-            //        context.Result = new ForbidResult();
-            //    }
-            //}
         }
     }
 }

@@ -1,7 +1,16 @@
 ﻿namespace Framework.Service
 {
+    /// <summary>
+    /// Defines the <see cref="SwaggerConfigurationModel" />.
+    /// </summary>
     public class SwaggerConfigurationModel
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SwaggerConfigurationModel"/> class.
+        /// </summary>
+        /// <param name="apiVersion">The apiVersion<see cref="string"/>.</param>
+        /// <param name="apiName">The apiName<see cref="string"/>.</param>
+        /// <param name="alwaysShowInSwaggerUI">The alwaysShowInSwaggerUI<see cref="bool"/>.</param>
         public SwaggerConfigurationModel(string apiVersion, string apiName, bool alwaysShowInSwaggerUI = false)
         {
             ApiVersion = apiVersion;
@@ -10,27 +19,18 @@
         }
 
         /// <summary>
-        /// Gets a value indicating whether [always show in swagger UI].
+        /// Gets a value indicating whether [always show in swagger UI]..
         /// </summary>
-        /// <value>
-        ///   <c>true</c> if [always show in swagger UI]; otherwise, <c>false</c>.
-        /// </value>
         public bool AlwaysShowInSwaggerUI { get; }
 
         /// <summary>
-        /// Gets the API version.
+        /// Gets the API version..
         /// </summary>
-        /// <value>
-        /// The API version.
-        /// </value>
         public string ApiVersion { get; }
 
         /// <summary>
-        /// Gets the name of the API.
+        /// Gets the name of the API..
         /// </summary>
-        /// <value>
-        /// The name of the API.
-        /// </value>
         public string ApiName { get; }
     }
 }

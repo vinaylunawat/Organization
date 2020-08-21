@@ -1,6 +1,5 @@
 ﻿namespace Framework.Service.Extension
 {
-    using Framework.Constant;
     using Framework.Entity;
     using Framework.Service.Enumeration;
     using Framework.Service.Paging;
@@ -13,8 +12,19 @@
     using System.Linq.Expressions;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// Defines the <see cref="QueryableExtensions" />.
+    /// </summary>
     public static class QueryableExtensions
     {
+        /// <summary>
+        /// The ToPaginatedListAsync.
+        /// </summary>
+        /// <typeparam name="T">.</typeparam>
+        /// <param name="source">The source<see cref="IQueryable{T}"/>.</param>
+        /// <param name="pageNumber">The pageNumber<see cref="int"/>.</param>
+        /// <param name="pageSize">The pageSize<see cref="int"/>.</param>
+        /// <returns>The <see cref="Task{IPaginatedList{T}}"/>.</returns>
         public static async Task<IPaginatedList<T>> ToPaginatedListAsync<T>(this IQueryable<T> source, int pageNumber, int pageSize)
         {
             pageNumber = pageNumber <= 0 ? 1 : pageNumber;
@@ -25,6 +35,14 @@
 
             return new PaginatedList<T>(items, count, pageNumber, pageSize);
         }
+
+        /// <summary>
+        /// The AddPredicate.
+        /// </summary>
+        /// <typeparam name="T">.</typeparam>
+        /// <param name="query">The query<see cref="IQueryable{T}"/>.</param>
+        /// <param name="criteria">The criteria<see cref="FilterCriteria{T}"/>.</param>
+        /// <returns>The <see cref="IQueryable{T}"/>.</returns>
         public static IQueryable<T> AddPredicate<T>(this IQueryable<T> query, FilterCriteria<T> criteria)
             where T : BaseEntity
         {
@@ -36,6 +54,13 @@
             return query;
         }
 
+        /// <summary>
+        /// The AddIncludes.
+        /// </summary>
+        /// <typeparam name="T">.</typeparam>
+        /// <param name="query">The query<see cref="IQueryable{T}"/>.</param>
+        /// <param name="criteria">The criteria<see cref="FilterCriteria{T}"/>.</param>
+        /// <returns>The <see cref="IQueryable{T}"/>.</returns>
         public static IQueryable<T> AddIncludes<T>(this IQueryable<T> query, FilterCriteria<T> criteria)
             where T : BaseEntity
         {
@@ -48,6 +73,13 @@
             return query;
         }
 
+        /// <summary>
+        /// The EvaluateInclude.
+        /// </summary>
+        /// <typeparam name="T">.</typeparam>
+        /// <param name="current">The current<see cref="IQueryable{T}"/>.</param>
+        /// <param name="item">The item<see cref="Expression{Func{T, object}}"/>.</param>
+        /// <returns>The <see cref="IQueryable{T}"/>.</returns>
         private static IQueryable<T> EvaluateInclude<T>(IQueryable<T> current, Expression<Func<T, object>> item)
             where T : BaseEntity
         {
@@ -85,6 +117,13 @@
             return current.Include(item);
         }
 
+        /// <summary>
+        /// The AddPaging.
+        /// </summary>
+        /// <typeparam name="T">.</typeparam>
+        /// <param name="query">The query<see cref="IQueryable{T}"/>.</param>
+        /// <param name="criteria">The criteria<see cref="FilterCriteria{T}"/>.</param>
+        /// <returns>The <see cref="IQueryable{T}"/>.</returns>
         public static IQueryable<T> AddPaging<T>(this IQueryable<T> query, FilterCriteria<T> criteria)
             where T : BaseEntity
         {
@@ -97,6 +136,13 @@
             return query;
         }
 
+        /// <summary>
+        /// The AddSorting.
+        /// </summary>
+        /// <typeparam name="T">.</typeparam>
+        /// <param name="query">The query<see cref="IQueryable{T}"/>.</param>
+        /// <param name="criteria">The criteria<see cref="FilterCriteria{T}"/>.</param>
+        /// <returns>The <see cref="IQueryable{T}"/>.</returns>
         public static IQueryable<T> AddSorting<T>(this IQueryable<T> query, FilterCriteria<T> criteria)
             where T : BaseEntity
         {
@@ -108,6 +154,14 @@
             return query;
         }
 
+        /// <summary>
+        /// The GetQueryableSort.
+        /// </summary>
+        /// <typeparam name="T">.</typeparam>
+        /// <param name="query">The query<see cref="IQueryable{T}"/>.</param>
+        /// <param name="sortField">The sortField<see cref="string"/>.</param>
+        /// <param name="sortDirection">The sortDirection<see cref="SortDirection"/>.</param>
+        /// <returns>The <see cref="IQueryable{T}"/>.</returns>
         public static IQueryable<T> GetQueryableSort<T>(this IQueryable<T> query, string sortField, SortDirection sortDirection)
         {
             var propertyNames = sortField.Split(".");
@@ -137,6 +191,18 @@
             return returnquery;
         }
 
+        /// <summary>
+        /// The OrderEntitiesByModelsOrder.
+        /// </summary>
+        /// <typeparam name="TModel">.</typeparam>
+        /// <typeparam name="TEntity">.</typeparam>
+        /// <typeparam name="TReturnType">.</typeparam>
+        /// <param name="entities">The entities<see cref="IQueryable{TEntity}"/>.</param>
+        /// <param name="models">The models<see cref="IEnumerable{TModel}"/>.</param>
+        /// <param name="entityKey">The entityKey<see cref="Func{TEntity, object}"/>.</param>
+        /// <param name="entityValue">The entityValue<see cref="Func{TEntity, TReturnType}"/>.</param>
+        /// <param name="modelKey">The modelKey<see cref="Func{TModel, object}"/>.</param>
+        /// <returns>The <see cref="List{TReturnType}"/>.</returns>
         public static List<TReturnType> OrderEntitiesByModelsOrder<TModel, TEntity, TReturnType>(this IQueryable<TEntity> entities, IEnumerable<TModel> models, Func<TEntity, object> entityKey, Func<TEntity, TReturnType> entityValue, Func<TModel, object> modelKey)
         {
             var returnedModels = new List<TReturnType>();

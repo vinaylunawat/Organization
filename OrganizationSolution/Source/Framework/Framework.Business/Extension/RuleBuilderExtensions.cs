@@ -1,8 +1,8 @@
 ﻿namespace Framework.Business.Extension
 {
+    using FluentValidation;
     using Framework.Business.Models;
     using Framework.Constant;
-    using FluentValidation;
     using System;
     using System.Text.RegularExpressions;
 

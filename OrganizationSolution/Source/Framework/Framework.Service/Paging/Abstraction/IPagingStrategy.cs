@@ -6,12 +6,12 @@
     public interface IPagingStrategy
     {
         /// <summary>
-        /// Gets or sets the amount of records in the page.
+        /// Gets or sets the amount of records in the page..
         /// </summary>
         int PageSize { get; set; }
 
         /// <summary>
-        /// Gets or sets the current page index being retrieved.
+        /// Gets or sets the current page index being retrieved..
         /// </summary>
         int PageNumber { get; set; }
     }

@@ -1,22 +1,30 @@
 ﻿namespace Geography.DataLoader
 {
-    using Geography.Business.Country.Manager;
-    using Geography.DataAccess;
     using Framework.Business;
     using Framework.Configuration;
+    using Framework.Configuration.Models;
     using Framework.DataLoader;
+    using Geography.Business.Country.Manager;
+    using Geography.DataAccess;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Newtonsoft.Json;
     using System;
     using System.Diagnostics;
     using System.Threading.Tasks;
-    using Framework.Configuration.Models;
 
-    class Program
+    /// <summary>
+    /// Defines the <see cref="Program" />.
+    /// </summary>
+    internal class Program
     {
+        /// <summary>
+        /// The Main.
+        /// </summary>
+        /// <param name="args">The args<see cref="string[]"/>.</param>
+        /// <returns>The <see cref="Task"/>.</returns>
         public static async Task Main(string[] args)
-        {            
+        {
             try
             {
                 Console.Title = "Geography Dataloader";
@@ -54,6 +62,10 @@
             }
         }
 
+        /// <summary>
+        /// The ConfigureDbServices.
+        /// </summary>
+        /// <param name="services">The services<see cref="IServiceCollection"/>.</param>
         private static void ConfigureDbServices(IServiceCollection services)
         {
             var serviceProvider = services.BuildServiceProvider();

@@ -28,6 +28,7 @@
         /// </summary>
         /// <param name="context">The context<see cref="HttpContext"/>.</param>
         /// <param name="tenantIdService">The tenantIdService<see cref="ITenantIdService"/>.</param>
+        /// <param name="userService">The userService<see cref="IUserService"/>.</param>
         /// <returns>The <see cref="Task"/>.</returns>
         public async Task InvokeAsync(HttpContext context, ITenantIdService tenantIdService, IUserService userService)
         {

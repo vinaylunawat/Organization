@@ -3,10 +3,19 @@
     using Framework.Entity;
     using System.Collections.Generic;
 
+    /// <summary>
+    /// Defines the <see cref="Country" />.
+    /// </summary>
     public class Country : EntityWithIdCodeName
     {
+        /// <summary>
+        /// Gets or sets the IsoCode.
+        /// </summary>
         public string IsoCode { get; set; }
 
-        public IList<State> States { get; set; }        
-    }     
+        /// <summary>
+        /// Gets or sets the States.
+        /// </summary>
+        public IList<State> States { get; set; }
+    }
 }

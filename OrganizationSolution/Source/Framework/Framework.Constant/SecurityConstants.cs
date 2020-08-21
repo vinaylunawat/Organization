@@ -71,7 +71,7 @@
         public const string KeyNotSupportedValidationMessage = "The key type is not supported:";
 
         /// <summary>
-        /// Define the Id.
+        /// Define the Id..
         /// </summary>
         public const string Id = "Id";
     }

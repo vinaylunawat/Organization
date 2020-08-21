@@ -8,14 +8,14 @@
     public interface ITenantIdProvider
     {
         /// <summary>
-        /// Gets the tenant ids for the request.
+        /// Gets the tenant ids for the request..
         /// </summary>
         IEnumerable<long> TenantIds { get; }
 
         /// <summary>
         /// The SetTenantId.
         /// </summary>
-        /// <param name="tenantId">The tenantIds<see cref="IEnumerable{long}"/>.</param>
+        /// <param name="tenantIds">The tenantIds<see cref="IEnumerable{long}"/>.</param>
         void SetTenantId(IEnumerable<long> tenantIds);
     }
 }

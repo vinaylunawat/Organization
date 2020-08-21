@@ -1,20 +1,27 @@
-﻿
-
-namespace Framework.Business
+﻿namespace Framework.Business
 {
+    using EnsureThat;
+    using FluentValidation;
     using Framework.Business.Extension;
     using Framework.Business.Manager;
     using Framework.Configuration;
-    using EnsureThat;
-    using FluentValidation;
     using Microsoft.Extensions.DependencyInjection;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
 
+    /// <summary>
+    /// Defines the <see cref="BusinessServiceCollectionExtensions" />.
+    /// </summary>
     public static class BusinessServiceCollectionExtensions
     {
+        /// <summary>
+        /// The AddAutoMapper.
+        /// </summary>
+        /// <param name="services">The services<see cref="IServiceCollection"/>.</param>
+        /// <param name="assemblies">The assemblies<see cref="IEnumerable{Assembly}"/>.</param>
+        /// <returns>The <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection AddAutoMapper(this IServiceCollection services, IEnumerable<Assembly> assemblies)
         {
             EnsureArg.IsNotNull(services, nameof(services));
@@ -37,6 +44,12 @@ namespace Framework.Business
             return updatedServices;
         }
 
+        /// <summary>
+        /// The AddAutoMapper.
+        /// </summary>
+        /// <param name="services">The services<see cref="IServiceCollection"/>.</param>
+        /// <param name="assembly">The assembly<see cref="Assembly"/>.</param>
+        /// <returns>The <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection AddAutoMapper(this IServiceCollection services, Assembly assembly)
         {
             EnsureArg.IsNotNull(services, nameof(services));
@@ -45,6 +58,13 @@ namespace Framework.Business
             return AddAutoMapper(services, new[] { assembly });
         }
 
+        /// <summary>
+        /// The AddManagers.
+        /// </summary>
+        /// <param name="services">The services<see cref="IServiceCollection"/>.</param>
+        /// <param name="assemblies">The assemblies<see cref="IEnumerable{Assembly}"/>.</param>
+        /// <param name="serviceLifetime">The serviceLifetime<see cref="ServiceLifetime"/>.</param>
+        /// <returns>The <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection AddManagers(this IServiceCollection services, IEnumerable<Assembly> assemblies, ServiceLifetime serviceLifetime = ServiceLifetime.Scoped)
         {
             EnsureArg.IsNotNull(services, nameof(services));
@@ -53,14 +73,28 @@ namespace Framework.Business
             return services.RegisterValidators(assemblies, serviceLifetime).RegisterManagers(assemblies, serviceLifetime);
         }
 
+        /// <summary>
+        /// The AddManagers.
+        /// </summary>
+        /// <param name="services">The services<see cref="IServiceCollection"/>.</param>
+        /// <param name="assembly">The assembly<see cref="Assembly"/>.</param>
+        /// <param name="serviceLifetime">The serviceLifetime<see cref="ServiceLifetime"/>.</param>
+        /// <returns>The <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection AddManagers(this IServiceCollection services, Assembly assembly, ServiceLifetime serviceLifetime = ServiceLifetime.Scoped)
         {
             EnsureArg.IsNotNull(services, nameof(services));
             EnsureArg.IsNotNull(assembly, nameof(assembly));
 
             return AddManagers(services, new[] { assembly }, serviceLifetime);
-        }       
+        }
 
+        /// <summary>
+        /// The RegisterManagers.
+        /// </summary>
+        /// <param name="services">The services<see cref="IServiceCollection"/>.</param>
+        /// <param name="assemblies">The assemblies<see cref="IEnumerable{Assembly}"/>.</param>
+        /// <param name="serviceLifetime">The serviceLifetime<see cref="ServiceLifetime"/>.</param>
+        /// <returns>The <see cref="IServiceCollection"/>.</returns>
         private static IServiceCollection RegisterManagers(this IServiceCollection services, IEnumerable<Assembly> assemblies, ServiceLifetime serviceLifetime)
         {
             var managers = assemblies.SelectMany(x => x.ExportedTypes
@@ -92,6 +126,13 @@ namespace Framework.Business
             return services;
         }
 
+        /// <summary>
+        /// The RegisterValidators.
+        /// </summary>
+        /// <param name="services">The services<see cref="IServiceCollection"/>.</param>
+        /// <param name="assemblies">The assemblies<see cref="IEnumerable{Assembly}"/>.</param>
+        /// <param name="serviceLifetime">The serviceLifetime<see cref="ServiceLifetime"/>.</param>
+        /// <returns>The <see cref="IServiceCollection"/>.</returns>
         private static IServiceCollection RegisterValidators(this IServiceCollection services, IEnumerable<Assembly> assemblies, ServiceLifetime serviceLifetime)
         {
             var validators = assemblies.SelectMany(x => x.ExportedTypes
@@ -120,7 +161,5 @@ namespace Framework.Business
 
             return services;
         }
-
-        
     }
 }

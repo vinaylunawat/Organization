@@ -1,16 +1,25 @@
 ﻿namespace Framework.Business
 {
+    using EnsureThat;
+    using FluentValidation.Results;
+    using Framework.Configuration;
+    using Newtonsoft.Json;
     using System;
     using System.Diagnostics;
     using System.Text;
-    using Framework.Configuration;
-    using EnsureThat;
-    using FluentValidation.Results;
-    using Newtonsoft.Json;
 
+    /// <summary>
+    /// Defines the <see cref="ErrorMessage{TErrorCode}" />.
+    /// </summary>
+    /// <typeparam name="TErrorCode">.</typeparam>
     public class ErrorMessage<TErrorCode>
         where TErrorCode : struct, Enum
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ErrorMessage{TErrorCode}"/> class.
+        /// </summary>
+        /// <param name="errorCode">The errorCode<see cref="TErrorCode"/>.</param>
+        /// <param name="message">The message<see cref="string"/>.</param>
         public ErrorMessage(TErrorCode errorCode, string message)
         {
             EnsureArg.IsNotNullOrWhiteSpace(message, nameof(message));
@@ -21,6 +30,11 @@
             Message = message;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ErrorMessage{TErrorCode}"/> class.
+        /// </summary>
+        /// <param name="errorCode">The errorCode<see cref="TErrorCode"/>.</param>
+        /// <param name="exception">The exception<see cref="Exception"/>.</param>
         public ErrorMessage(TErrorCode errorCode, Exception exception)
         {
             EnsureArg.IsNotNull(exception, nameof(exception));
@@ -30,6 +44,13 @@
             Message = GenerateMessageFromException(exception);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ErrorMessage{TErrorCode}"/> class.
+        /// </summary>
+        /// <param name="propertyName">The propertyName<see cref="string"/>.</param>
+        /// <param name="errorCode">The errorCode<see cref="TErrorCode"/>.</param>
+        /// <param name="message">The message<see cref="string"/>.</param>
+        /// <param name="attemptedValue">The attemptedValue<see cref="object"/>.</param>
         public ErrorMessage(string propertyName, TErrorCode errorCode, string message, object attemptedValue)
         {
             EnsureArg.IsNotNull(propertyName, nameof(propertyName));
@@ -41,6 +62,10 @@
             AttemptedValue = attemptedValue;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ErrorMessage{TErrorCode}"/> class.
+        /// </summary>
+        /// <param name="exception">The exception<see cref="Exception"/>.</param>
         public ErrorMessage(Exception exception)
         {
             EnsureArg.IsNotNull(exception, nameof(exception));
@@ -50,6 +75,10 @@
             Message = GenerateMessageFromException(exception);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ErrorMessage{TErrorCode}"/> class.
+        /// </summary>
+        /// <param name="validationFailure">The validationFailure<see cref="ValidationFailure"/>.</param>
         public ErrorMessage(ValidationFailure validationFailure)
         {
             EnsureArg.IsNotNull(validationFailure, nameof(validationFailure));
@@ -69,47 +98,50 @@
             Message = validationFailure.ErrorMessage;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ErrorMessage{TErrorCode}"/> class.
+        /// </summary>
         protected ErrorMessage()
         {
         }
 
         /// <summary>
-        /// Gets the error code.
+        /// Gets or sets the ErrorCode
+        /// Gets the error code..
         /// </summary>
-        /// <value>
-        /// The error code.
-        /// </value>
         public TErrorCode ErrorCode { get; set; }
 
         /// <summary>
-        /// Gets the message.
+        /// Gets or sets the Message
+        /// Gets the message..
         /// </summary>
-        /// <value>
-        /// The message.
-        /// </value>
         public string Message { get; set; }
 
         /// <summary>
-        /// Gets the name of the property.
+        /// Gets or sets the PropertyName
+        /// Gets the name of the property..
         /// </summary>
-        /// <value>
-        /// The name of the property.
-        /// </value>
         public string PropertyName { get; set; }
 
         /// <summary>
-        /// Gets or sets the attempted value.
+        /// Gets or sets the attempted value..
         /// </summary>
-        /// <value>
-        /// The attempted value.
-        /// </value>
         public object AttemptedValue { get; set; }
 
+        /// <summary>
+        /// The ToFormattedString.
+        /// </summary>
+        /// <returns>The <see cref="string"/>.</returns>
         internal string ToFormattedString()
         {
             return $"{ErrorCode.ToString()} - Property: '{PropertyName}' with value '{AttemptedValue}'. {Message}";
         }
 
+        /// <summary>
+        /// The GenerateMessageFromException.
+        /// </summary>
+        /// <param name="exception">The exception<see cref="Exception"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
         private static string GenerateMessageFromException(Exception exception)
         {
             StringBuilder strBuilder = new StringBuilder();
@@ -132,6 +164,11 @@
             return strBuilder.ToString().Replace(Environment.NewLine, " ", StringComparison.OrdinalIgnoreCase);
         }
 
+        /// <summary>
+        /// The BuildErrorMessageFromException.
+        /// </summary>
+        /// <param name="exception">The exception<see cref="Exception"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
         private static string BuildErrorMessageFromException(Exception exception)
         {
             try

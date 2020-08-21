@@ -1,11 +1,22 @@
 ﻿namespace Framework.Business.Models.Models
 {
+    /// <summary>
+    /// Defines the <see cref="ModelWithCodeName" />.
+    /// </summary>
     public abstract class ModelWithCodeName : ModelWithCode, IModelWithName
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelWithCodeName"/> class.
+        /// </summary>
         protected ModelWithCodeName()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelWithCodeName"/> class.
+        /// </summary>
+        /// <param name="code">The code<see cref="string"/>.</param>
+        /// <param name="name">The name<see cref="string"/>.</param>
         protected ModelWithCodeName(string code, string name)
             : base(code)
         {
@@ -13,11 +24,8 @@
         }
 
         /// <summary>
-        /// Gets or sets the name.
+        /// Gets or sets the Name.
         /// </summary>
-        /// <value>
-        /// The name.
-        /// </value>
         public string Name { get; set; }
     }
 }

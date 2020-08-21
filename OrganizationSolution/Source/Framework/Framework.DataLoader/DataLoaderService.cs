@@ -1,28 +1,62 @@
 ﻿namespace Framework.DataLoader
 {
-    using System;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Framework.Constant;
     using EnsureThat;
+    using Framework.Constant;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
+    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
 
+    /// <summary>
+    /// Defines the <see cref="DataLoaderService" />.
+    /// </summary>
     public sealed class DataLoaderService : BackgroundService
     {
+        /// <summary>
+        /// Defines the ConfigSectionName.
+        /// </summary>
         public const string ConfigSectionName = ConfigurationConstant.DataLoaderConfigSectionName;
 
+        /// <summary>
+        /// Defines the _serviceProvider.
+        /// </summary>
         private readonly IServiceProvider _serviceProvider;
+
+        /// <summary>
+        /// Defines the _dataLoaderOptions.
+        /// </summary>
         private readonly DataLoaderOptions _dataLoaderOptions;
+
+        /// <summary>
+        /// Defines the _logger.
+        /// </summary>
         private readonly ILogger<DataLoaderService> _logger;
+
+        /// <summary>
+        /// Defines the _serviceName.
+        /// </summary>
         private readonly string _serviceName;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLoaderService"/> class.
+        /// </summary>
+        /// <param name="serviceProvider">The serviceProvider<see cref="IServiceProvider"/>.</param>
+        /// <param name="logger">The logger<see cref="ILogger{DataLoaderService}"/>.</param>
+        /// <param name="serviceName">The serviceName<see cref="string"/>.</param>
         public DataLoaderService(IServiceProvider serviceProvider, ILogger<DataLoaderService> logger, string serviceName = ConfigSectionName)
             : this(serviceProvider, null, logger, serviceName)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLoaderService"/> class.
+        /// </summary>
+        /// <param name="serviceProvider">The serviceProvider<see cref="IServiceProvider"/>.</param>
+        /// <param name="dataLoaderOptions">The dataLoaderOptions<see cref="DataLoaderOptions"/>.</param>
+        /// <param name="logger">The logger<see cref="ILogger{DataLoaderService}"/>.</param>
+        /// <param name="serviceName">The serviceName<see cref="string"/>.</param>
         public DataLoaderService(IServiceProvider serviceProvider, DataLoaderOptions dataLoaderOptions, ILogger<DataLoaderService> logger, string serviceName = ConfigSectionName)
         {
             EnsureArg.IsNotNull(serviceProvider, nameof(serviceProvider));
@@ -35,6 +69,11 @@
             _serviceName = serviceName;
         }
 
+        /// <summary>
+        /// The ExecuteAsync.
+        /// </summary>
+        /// <param name="stoppingToken">The stoppingToken<see cref="CancellationToken"/>.</param>
+        /// <returns>The <see cref="Task"/>.</returns>
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             try

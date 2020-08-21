@@ -1,13 +1,13 @@
 ﻿namespace Framework.Business.Manager.Query
 {
+    using AutoMapper;
+    using DataAccess;
+    using EnsureThat;
     using Framework.Business.Extension;
     using Framework.Business.Models;
     using Framework.DataAccess.Repository;
     using Framework.Entity;
     using Framework.Service.Utilities.Criteria;
-    using AutoMapper;
-    using DataAccess;
-    using EnsureThat;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
     using System;

@@ -41,6 +41,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Geography.Business", "Organ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Geography.Service", "OrganizationSolution\Source\App\Geography.Service\Geography.Service.csproj", "{AAB4B95D-7A9A-4482-95DE-294F433C98E8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.Test", "OrganizationSolution\Source\Framework\Framework.Test\Framework.Test.csproj", "{2E2F5715-FF13-42F9-A41E-B4C557F0BA0C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,10 @@ Global
 		{AAB4B95D-7A9A-4482-95DE-294F433C98E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AAB4B95D-7A9A-4482-95DE-294F433C98E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AAB4B95D-7A9A-4482-95DE-294F433C98E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E2F5715-FF13-42F9-A41E-B4C557F0BA0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E2F5715-FF13-42F9-A41E-B4C557F0BA0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E2F5715-FF13-42F9-A41E-B4C557F0BA0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E2F5715-FF13-42F9-A41E-B4C557F0BA0C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -134,6 +140,7 @@ Global
 		{67FCF6F2-E283-4A64-BE08-DDFFC9C3A4B3} = {2A5B6DF6-8565-4827-AD82-FD77D894A302}
 		{3C0F4D12-4044-42C7-9FB4-0D43B6C043CB} = {2A5B6DF6-8565-4827-AD82-FD77D894A302}
 		{AAB4B95D-7A9A-4482-95DE-294F433C98E8} = {2A5B6DF6-8565-4827-AD82-FD77D894A302}
+		{2E2F5715-FF13-42F9-A41E-B4C557F0BA0C} = {B3E25260-2571-4F33-AC44-88EBE03E7ADB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {81E3A54C-F0B4-45E9-BF07-1AE24C1EFA70}

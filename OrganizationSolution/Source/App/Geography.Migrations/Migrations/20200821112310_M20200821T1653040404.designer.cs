@@ -1,10 +1,15 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace Geography.Migrations.Migrations
+﻿namespace Geography.Migrations.Migrations
 {
-    public partial class M20200821T1653040404designer : Migration
+    using Microsoft.EntityFrameworkCore.Migrations;
+    using System;
+
+
+    internal partial class M20200821T1653040404designer : Migration
     {
+        /// <summary>
+        /// The Up.
+        /// </summary>
+        /// <param name="migrationBuilder">The migrationBuilder<see cref="MigrationBuilder"/>.</param>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
@@ -74,6 +79,10 @@ namespace Geography.Migrations.Migrations
                 column: "CountryId");
         }
 
+        /// <summary>
+        /// The Down.
+        /// </summary>
+        /// <param name="migrationBuilder">The migrationBuilder<see cref="MigrationBuilder"/>.</param>
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

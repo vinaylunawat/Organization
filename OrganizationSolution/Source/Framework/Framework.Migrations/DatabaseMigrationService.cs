@@ -1,25 +1,61 @@
 ﻿namespace Framework.Migrations
 {
-    using System;
-    using System.Threading;
-    using System.Threading.Tasks;
     using EnsureThat;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Infrastructure;
     using Microsoft.EntityFrameworkCore.Migrations;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
+    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
 
+    /// <summary>
+    /// Defines the <see cref="DatabaseMigrationService{TDbContext}" />.
+    /// </summary>
+    /// <typeparam name="TDbContext">.</typeparam>
     public sealed class DatabaseMigrationService<TDbContext> : BackgroundService
         where TDbContext : DbContext
     {
+        /// <summary>
+        /// Defines the _databaseContext.
+        /// </summary>
         private readonly TDbContext _databaseContext;
+
+        /// <summary>
+        /// Defines the _logger.
+        /// </summary>
         private readonly ILogger<DatabaseMigrationService<TDbContext>> _logger;
+
+        /// <summary>
+        /// Defines the _deleteDefaultSchema.
+        /// </summary>
         private readonly bool _deleteDefaultSchema;
+
+        /// <summary>
+        /// Defines the _deleteDatabase.
+        /// </summary>
         private readonly bool _deleteDatabase;
+
+        /// <summary>
+        /// Defines the _serviceName.
+        /// </summary>
         private readonly string _serviceName;
+
+        /// <summary>
+        /// Defines the _targetMigration.
+        /// </summary>
         private readonly string _targetMigration;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DatabaseMigrationService{TDbContext}"/> class.
+        /// </summary>
+        /// <param name="databaseContext">The databaseContext<see cref="TDbContext"/>.</param>
+        /// <param name="logger">The logger<see cref="ILogger{DatabaseMigrationService{TDbContext}}"/>.</param>
+        /// <param name="deleteDefaultSchema">The deleteDefaultSchema<see cref="bool"/>.</param>
+        /// <param name="deleteDatabase">The deleteDatabase<see cref="bool"/>.</param>
+        /// <param name="serviceName">The serviceName<see cref="string"/>.</param>
+        /// <param name="targetMigration">The targetMigration<see cref="string"/>.</param>
         public DatabaseMigrationService(TDbContext databaseContext, ILogger<DatabaseMigrationService<TDbContext>> logger, bool deleteDefaultSchema = false, bool deleteDatabase = false, string serviceName = "Database Migration", string targetMigration = null)
         {
             EnsureArg.IsNotNull(databaseContext, nameof(databaseContext));
@@ -34,6 +70,11 @@
             _targetMigration = targetMigration;
         }
 
+        /// <summary>
+        /// The ExecuteAsync.
+        /// </summary>
+        /// <param name="stoppingToken">The stoppingToken<see cref="CancellationToken"/>.</param>
+        /// <returns>The <see cref="Task"/>.</returns>
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             try
