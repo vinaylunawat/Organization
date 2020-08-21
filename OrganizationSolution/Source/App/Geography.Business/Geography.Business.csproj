@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="AuthToken\**" />
+    <EmbeddedResource Remove="AuthToken\**" />
+    <EntityDeploy Remove="AuthToken\**" />
+    <None Remove="AuthToken\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Framework\Framework.Business\Framework.Business.csproj" />
+    <ProjectReference Include="..\..\Framework\Framework.Security\Framework.Security.csproj" />
+    <ProjectReference Include="..\..\Framework\Framework.Service\Framework.Service.csproj" />
+    <ProjectReference Include="..\Geography.DataAccess\Geography.DataAccess.csproj" />
+  </ItemGroup>
+
+</Project>

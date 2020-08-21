@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Framework\Framework.DataAccess\Framework.DataAccess.csproj" />
+    <ProjectReference Include="..\..\Framework\Framework.Entity\Framework.Entity.csproj" />
+    <ProjectReference Include="..\Geography.Entity\Geography.Entity.csproj" />
+  </ItemGroup>
+
+</Project>

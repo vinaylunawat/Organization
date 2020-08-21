@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <PackageId>Org.Framework.DataAccess</PackageId>
+    <Authors>Org</Authors>
+    <Company>Org</Company>
+    <Product>Org.Framework.DataAccess</Product>
+    <Version>1.0.0</Version>    
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Ensure.That" Version="9.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Framework.Constant\Framework.Constant.csproj" />
+    <ProjectReference Include="..\Framework.Entity\Framework.Entity.csproj" />
+    <ProjectReference Include="..\Framework.Service\Framework.Service.csproj" />
+  </ItemGroup>
+
+</Project>

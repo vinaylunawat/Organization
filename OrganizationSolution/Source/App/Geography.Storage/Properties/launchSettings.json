@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Geography.Storage": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
