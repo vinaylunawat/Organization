@@ -17,5 +17,7 @@
         /// Gets or sets the States.
         /// </summary>
         public IList<State> States { get; set; }
+
+        public string Test { get; set; }
     }
 }
